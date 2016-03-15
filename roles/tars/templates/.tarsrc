@@ -1,0 +1,5 @@
+{
+  "webhook": {
+    "secret": "{{ webhook.secret }}"
+  }
+}

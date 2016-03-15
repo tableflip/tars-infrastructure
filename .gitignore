@@ -1,0 +1,4 @@
+.vagrant
+*id_rsa
+*.key
+group_vars/all/secrets.yaml

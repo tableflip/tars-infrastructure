@@ -1,0 +1,6 @@
+- hosts: tars
+  roles:
+    - apt-update
+    - bootstrap
+    - nginx
+    - node
