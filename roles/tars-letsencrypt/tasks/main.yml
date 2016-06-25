@@ -1,0 +1,31 @@
+# Assumes `tars` has been run. Requires a non-ssl configured nginx to be running for the domain.
+- name: Ensure nginx is running
+  become: yes
+  service: name=nginx state=reloaded
+
+- name: Create tars https cert
+  become: yes
+  command: /usr/bin/certbot-auto certonly --webroot --domain tars.tableflip.io  --email {{tls_cert_email}} -w /var/www/well-known --agree-tos --keep-until-expiring --quiet
+  args:
+    creates: /etc/letsencrypt/live/tars.tableflip.io/cert.pem
+  notify:
+    - Restart Nginx
+
+- name: Create tableflip https cert
+  become: yes
+  command: /usr/bin/certbot-auto certonly --webroot --domain tableflip.io --domain www.tableflip.io --email {{tls_cert_email}} -w /var/www/well-known --agree-tos --keep-until-expiring --quiet
+  args:
+    creates: /etc/letsencrypt/live/tableflip.io/cert.pem
+  notify:
+    - Restart Nginx
+
+- name: Set cron to renew certs
+  become: yes
+  cron: name="certbot renew" minute="10" hour="7" job="/user/bin/certbot-auto renew"
+
+# Replace nginx config with SSL flavour
+- name: Copy nginx config
+  become: yes
+  copy: src=nginx/ dest=/etc/nginx/conf.d/ mode=0644 force=yes
+  notify:
+    - Restart Nginx

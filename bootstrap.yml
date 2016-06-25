@@ -3,4 +3,5 @@
     - apt-update
     - bootstrap
     - nginx
+    - letsencrypt
     - node
