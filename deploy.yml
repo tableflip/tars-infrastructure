@@ -3,7 +3,7 @@
 - hosts: tars
   gather_facts: no
   roles:
-    # - apt-update
+    - apt-update
     - tars
 
 - hosts: production
