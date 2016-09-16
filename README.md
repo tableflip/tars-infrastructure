@@ -99,3 +99,29 @@ ansible-playbook -i production bootstrap.yml --extra-vars "ansible_user=root"
 # Intall app and dependencies
 ansible-playbook -i production deploy.yml
 ```
+
+## Secrets - Ansible Vault
+
+See: http://docs.ansible.com/ansible/playbooks_vault.html
+
+**Creating Encrypting Files**
+
+Encrypt a list of files. You'll be prompted for a passphrase which'll be the key for decrypting them.
+
+```sh
+ansible-vault encrypt [files]
+```
+
+For example, to encrypt our deploy keys and secrets, we do:
+
+```sh
+ansible-vault encrypt group_vars/all/keys.yml group_vars/dev/dev_secrets.yml group_vars/next/next_secrets.yml group_vars/production/production_secrets.yml
+```
+
+**Editing Encrypted Files**
+
+```sh
+ansible-vault edit group_vars/production/production_secrets.yml
+```
+
+Will prompt you for the passphrase and open the file your default $EDITOR as configured in your shell.
