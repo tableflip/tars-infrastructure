@@ -16,7 +16,7 @@ if [[ $DEPLOY_ENV == production ]]; then
     then
       echo "Deploying to **PRODUCTION**"
       echo "ansible-playbook deploy.yml --ask-vault-pass -i $DEPLOY_ENV"
-      ansible-playbook deploy.yml --ask-vault-pass -i $DEPLOY_ENV
+      ansible-playbook deploy.yml --ask-vault-pass -vvvv -i $DEPLOY_ENV
     fi
 else
     echo "ansible-playbook deploy.yml --ask-vault-pass -i $DEPLOY_ENV"
